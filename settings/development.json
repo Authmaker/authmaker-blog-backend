@@ -1,7 +1,7 @@
 {
     "database": {
         "mongo": {
-            "db": "app-name",
+            "db": "blog",
             "host": "localhost",
             "port": 27017
         }
