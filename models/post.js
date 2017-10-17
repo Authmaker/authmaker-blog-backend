@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 
+const { Schema } = mongoose;
+
 const schema = new mongoose.Schema({
-  name: String,
+  title: String,
   body: String,
+  author: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
 module.exports = schema;
