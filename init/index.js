@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const mongooseConnect = require('mongoose-nconf-connect');
+const authmakerVerifyExpress = require('authmaker-verify-express');
 const Q = require('q');
 const winston = require('winston');
 
@@ -24,6 +25,7 @@ module.exports = function initMongodb(nconf) {
   })
 
   .then(() => models.init(mongoose))
+  .then(() => authmakerVerifyExpress.connectMongo(nconf))
   .then(() => {
     initialised = true;
   })
