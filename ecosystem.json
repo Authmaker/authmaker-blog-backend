@@ -1,0 +1,22 @@
+{
+  "apps": [
+    {
+      "name"      : "Authblog-API",
+      "script"    : "app.js",
+      "env_production" : {
+        "NODE_ENV": "production"
+      }
+    }
+  ],
+  "deploy": {
+    "production" : {
+      "user" : "Julia",
+      "host" : "35.185.243.221",
+      "key"  : "~/.ssh/google_compute_engine",
+      "ref"  : "origin/master",
+      "repo" : "git@authmaker-blog-backend-github:donaldsonjulia/authmaker-blog-backend.git",
+      "path" : "/apps/authmaker-blog-backend",
+      "post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env production"
+    }
+  }
+}
