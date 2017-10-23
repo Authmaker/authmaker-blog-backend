@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "@stonecircle/generator-express:version": "1.7.0",
   "scripts": {
-    "deploy-production": "pm2 deploy ecosystem.json5 production update",
+    "deploy-production": "pm2 deploy ecosystem.json production update",
     "start": "NODE_ENV=development pm2 start app.js --name app-name --watch",
     "test": "NODE_ENV=test mocha --recursive --reporter spec",
     "test-watch": "npm run test -- -w --reporter min"
