@@ -1,6 +1,7 @@
+const authmakerCommon = require('@authmaker/common');
+const authmakerVerifyExpress = require('authmaker-verify-express');
 const mongoose = require('mongoose');
 const mongooseConnect = require('mongoose-nconf-connect');
-const authmakerVerifyExpress = require('authmaker-verify-express');
 const Q = require('q');
 const winston = require('winston');
 
@@ -23,16 +24,16 @@ module.exports = function initMongodb(nconf) {
     configPrefix: 'database:mongo:',
     logger: winston,
   })
-
-  .then(() => models.init(mongoose))
-  .then(() => authmakerVerifyExpress.connectMongo(nconf))
-  .then(() => {
-    initialised = true;
-  })
-  .then(null, (err) => {
-    winston.error('Error During Initialisation', {
-      error: err.message,
-      stack: err.stack,
+    .then(() => models.init(mongoose))
+    .then(() => authmakerVerifyExpress.init(nconf))
+    .then(() => authmakerCommon.init(nconf))
+    .then(() => {
+      initialised = true;
+    })
+    .then(null, (err) => {
+      winston.error('Error During Initialisation', {
+        error: err.message,
+        stack: err.stack,
+      });
     });
-  });
 };

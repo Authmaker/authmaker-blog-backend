@@ -1,14 +1,12 @@
 const autorouteJson = require('express-autoroute-json');
-const authmakerVerifyExpress = require('authmaker-verify-express');
-const models = require('../../../models').models;
+const authmakerCommon = require('@authmaker/common');
 
 module.exports.autoroute = autorouteJson({
-  model: models.user,
-  resource: 'user', // this will be pluralised in the routes
+  model: authmakerCommon.models.user,
+  resource: 'user',
 
-  // default CRUD
+  attributes: ['email', 'username'], // only use these two attributes when sending response
+
   find: {},
-  create: {},
-  update: {},
-  delete: {},
+  // only allow for viewing of user data, no other routes included besides 'find'
 });

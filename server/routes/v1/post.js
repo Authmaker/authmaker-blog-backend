@@ -1,37 +1,45 @@
 const autorouteJson = require('express-autoroute-json');
 const authmakerVerifyExpress = require('authmaker-verify-express');
-const models = require('../../../models').models;
+const { models } = require('../../../models');
 
 module.exports.autoroute = autorouteJson({
   model: models.post,
   resource: 'post', // this will be pluralised in the routes
 
-  // default CRUD
-  find: {},  // no authentication/authorization needed to view all posts
+  // no authentication/authorization needed to view all posts
+  find: {},
   create: {
+    // assign the current user as the new post's author
     preMiddleware(req, res, next) {
-      // eslint-ignore-next-line no-param-reassign
       req.body.data.attributes.author = req.user.id;
-      // assign the current user as the new post's author
       next();
     },
-    authentication: authmakerVerifyExpress.mongo(),
+
     // user must be authenticated to create a new post
+    authentication: authmakerVerifyExpress.mongo(),
   },
+
   update: {
-    authentication: authmakerVerifyExpress.mongo(), // user must be authenticated to edit a post
+    // user must be authenticated to edit a post
+    authentication: authmakerVerifyExpress.mongo(),
+
+    // user is only authorized to edit their own posts
     authorisation(req) {
       return {
         author: req.user.id,
       };
-    }, // user is only authorized to edit their own posts
+    },
   },
+
   delete: {
-    authentication: authmakerVerifyExpress.mongo(), // user must be authenticated to delete a post
+    // user must be authenticated to delete a post
+    authentication: authmakerVerifyExpress.mongo(),
+
+    // user is only authorized to delete their own posts
     authorisation(req) {
       return {
         author: req.user.id,
       };
-    }, // user is only authorized to delete their own posts
+    },
   },
 });
