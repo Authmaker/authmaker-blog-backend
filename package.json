@@ -1,17 +1,15 @@
 {
-  "name": "authmaker-blog-backend",
+  "name": "example-blog-backend",
   "version": "2.0.0",
-  "@authmaker/generator-express:version": "2.0.1",
+  "@authmaker/generator-express:version": "2.2.0",
   "scripts": {
-    "deploy-production": "pm2 deploy ecosystem.json production update",
-    "setup-production": "pm2 deploy ecosystem.json production setup",
-    "start": "NODE_ENV=development pm2 start app.js --name updatedgeneratorapp --watch",
+    "start": "NODE_ENV=production node app.js",
+    "start-local": "NODE_ENV=development pm2 start app.js --name example-blog-backend --watch",
     "test": "NODE_ENV=test mocha --recursive --reporter spec",
     "test-watch": "npm run test -- -w --reporter min"
   },
   "dependencies": {
-    "@authmaker/common": "^1.2.0",
-    "authmaker-verify-express": "^2.2.0",
+    "authmaker-verify-express": "^3.0.0",
     "body-parser": "^1.14.1",
     "cors": "^2.5.3",
     "express": "^4.12.3",
